@@ -1,0 +1,726 @@
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mkonzo Graphics — Transforming Ideas Into Visual Masterpieces</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+  :root {
+    --mg-bg: #0b0f14;
+    --mg-surface: #121821;
+    --mg-card: #151b26;
+    --mg-text: #e6eaf2;
+    --mg-muted: #a9b3c7;
+    --mg-primary: #5b8cff;
+    --mg-primary-600: #4478ff;
+    --mg-accent: #7b61ff;
+    --mg-accent-600: #6a4dff;
+    --mg-success: #22c55e;
+    --mg-warning: #f59e0b;
+    --mg-danger: #ef4444;
+    --mg-shadow: 0 10px 30px rgba(0,0,0,.35);
+    --mg-radius: 14px;
+    --mg-grid: 1160px;
+  }
+  :root[data-theme="light"] {
+    --mg-bg: #f7f8fb;
+    --mg-surface: #ffffff;
+    --mg-card: #ffffff;
+    --mg-text: #0b1220;
+    --mg-muted: #5a6b87;
+    --mg-primary: #355cff;
+    --mg-primary-600: #2b4ae0;
+    --mg-accent: #6a4dff;
+    --mg-accent-600: #5b3cff;
+    --mg-success: #16a34a;
+    --mg-warning: #d97706;
+    --mg-danger: #dc2626;
+    --mg-shadow: 0 10px 26px rgba(18, 25, 38, .08);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    background: radial-gradient(80% 60% at 100% 0%, rgba(91,140,255,.12) 0%, rgba(123,97,255,.10) 40%, transparent 70%),
+                radial-gradient(60% 50% at 0% 10%, rgba(123,97,255,.12) 0%, transparent 70%),
+                var(--mg-bg);
+    color: var(--mg-text);
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  /* Layout */
+  .mg-container { width: 100%; max-width: var(--mg-grid); margin: 0 auto; padding: 0 20px; }
+
+  /* Header */
+  .mg-header {
+    position: sticky; top: 0; z-index: 1000;
+    backdrop-filter: saturate(140%) blur(10px);
+    background: rgba(9,12,18,.55);
+    border-bottom: 1px solid rgba(255,255,255,.04);
+  }
+  :root[data-theme="light"] .mg-header { background: rgba(255,255,255,.7); border-bottom-color: rgba(0,0,0,.06); }
+  .mg-nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .mg-logo { font-weight: 800; letter-spacing: .6px; }
+  .mg-logo span { color: var(--mg-primary); }
+  .mg-menu { display: flex; gap: 20px; align-items: center; }
+  .mg-link { font-weight: 500; color: var(--mg-muted); padding: 10px 12px; border-radius: 10px; }
+  .mg-link:hover { color: var(--mg-text); background: rgba(255,255,255,.06); }
+  :root[data-theme="light"] .mg-link:hover { background: rgba(0,0,0,.06); }
+  .mg-cta { background: linear-gradient(90deg, var(--mg-primary), var(--mg-accent)); color: white; padding: 10px 16px; border-radius: 12px; font-weight: 700; box-shadow: var(--mg-shadow); }
+  .mg-cta:hover { filter: brightness(1.06); transform: translateY(-1px); }
+  .mg-burger { display: none; background: transparent; border: 0; color: var(--mg-text); }
+  .mg-theme { background: rgba(255,255,255,.06); color: var(--mg-text); border: 1px solid rgba(255,255,255,.08); height: 42px; padding: 0 12px; border-radius: 10px; display: inline-flex; align-items: center; gap: 8px; }
+  :root[data-theme="light"] .mg-theme { background: rgba(0,0,0,.04); border-color: rgba(0,0,0,.06); }
+
+  .mg-nav.scrolled { background: rgba(9,12,18,.9); box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+
+  /* Hero */
+  .mg-hero { position: relative; padding: 90px 0 60px; overflow: hidden; }
+  .mg-hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 36px; align-items: center; }
+  .mg-eyebrow { color: var(--mg-primary); font-weight: 700; letter-spacing: .18em; font-size: 12px; text-transform: uppercase; }
+  .mg-title { font-size: clamp(34px, 6vw, 60px); line-height: 1.04; margin: 14px 0 14px; font-weight: 900; }
+  .mg-subtitle { color: var(--mg-muted); font-size: clamp(15px, 2.2vw, 18px); }
+  .mg-hero-actions { display: flex; gap: 14px; margin: 26px 0 0; align-items: center; flex-wrap: wrap; }
+  .mg-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 18px; border-radius: 12px; font-weight: 700; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); color: var(--mg-text); }
+  .mg-btn:hover { background: rgba(255,255,255,.08); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+  .mg-btn.primary { background: linear-gradient(90deg, var(--mg-primary), var(--mg-accent)); border: none; color: #fff; }
+  .mg-hero-art { position: relative; }
+  .mg-hero-card { background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 18px; box-shadow: var(--mg-shadow); }
+  :root[data-theme="light"] .mg-hero-card { background: #ffffff; border-color: rgba(0,0,0,.06); }
+  .mg-hero-img { border-radius: 14px; aspect-ratio: 16/11; background: linear-gradient(135deg, #212b3a, #1a2230); display: grid; place-content: center; color: #9fb3ff; font-weight: 800; letter-spacing: 2px; }
+  :root[data-theme="light"] .mg-hero-img { background: linear-gradient(135deg, #e9eef9, #dde5f7); color: #2b4ae0; }
+  .mg-scroll { position: absolute; left: 50%; transform: translateX(-50%); bottom: 8px; color: var(--mg-muted); font-size: 12px; display: flex; align-items: center; gap: 8px; }
+
+  /* Section */
+  .mg-section { padding: 70px 0; }
+  .mg-sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 26px; }
+  .mg-h2 { font-size: clamp(24px, 4vw, 36px); margin: 0; }
+  .mg-lead { color: var(--mg-muted); max-width: 720px; }
+
+  /* Services */
+  .mg-grid { display: grid; gap: 18px; }
+  .mg-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .mg-service { background: var(--mg-card); border: 1px solid rgba(255,255,255,.06); border-radius: var(--mg-radius); padding: 18px; transition: transform .2s ease, box-shadow .2s ease; }
+  .mg-service:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,.35); border-color: rgba(91,140,255,.35); }
+  .mg-icon { width: 40px; height: 40px; border-radius: 10px; display: grid; place-content: center; color: white; margin-bottom: 10px; background: linear-gradient(135deg, var(--mg-primary), var(--mg-accent)); }
+  .mg-service h3 { margin: 6px 0 4px; font-size: 18px; }
+  .mg-service p { color: var(--mg-muted); margin: 0 0 10px; }
+  .mg-more { color: var(--mg-primary); font-weight: 600; }
+
+  /* Portfolio */
+  .mg-filter { display: flex; gap: 10px; flex-wrap: wrap; }
+  .mg-chip { padding: 8px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); color: var(--mg-muted); background: transparent; cursor: pointer; }
+  .mg-chip.active, .mg-chip:hover { color: var(--mg-text); background: rgba(255,255,255,.08); }
+  .mg-portfolio { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
+  .mg-card { position: relative; border-radius: 14px; overflow: hidden; background: #10151d; border: 1px solid rgba(255,255,255,.06); cursor: pointer; }
+  :root[data-theme="light"] .mg-card { background: #ffffff; border-color: rgba(0,0,0,.06); }
+  .mg-card img { width: 100%; height: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+  .mg-card .mg-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent, rgba(0,0,0,.65)); opacity: 0; transition: opacity .2s ease; display: flex; align-items: flex-end; }
+  .mg-card:hover .mg-overlay { opacity: 1; }
+  .mg-card .mg-meta { padding: 12px; color: #fff; }
+
+  /* Modal */
+  .mg-modal { position: fixed; inset: 0; display: none; place-items: center; background: rgba(0,0,0,.6); z-index: 2000; padding: 20px; }
+  .mg-modal.open { display: grid; }
+  .mg-modal-card { width: min(980px, 100%); background: var(--mg-surface); border: 1px solid rgba(255,255,255,.08); border-radius: 16px; box-shadow: var(--mg-shadow); overflow: hidden; }
+  .mg-modal-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .mg-modal-body { padding: 14px 16px; }
+  .mg-close { background: transparent; border: 0; color: var(--mg-muted); font-size: 22px; cursor: pointer; }
+
+  /* About */
+  .mg-about { display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; }
+  .mg-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0; }
+  .mg-stat { background: var(--mg-card); border: 1px solid rgba(255,255,255,.06); padding: 14px; border-radius: 12px; text-align: center; }
+  .mg-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+  .mg-tag { padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); color: var(--mg-muted); }
+
+  /* Testimonials */
+  .mg-carousel { position: relative; overflow: hidden; }
+  .mg-track { display: grid; grid-auto-flow: column; grid-auto-columns: 100%; transition: transform .4s ease; }
+  .mg-testimonial { display: grid; grid-template-columns: .8fr 1.2fr; gap: 16px; background: var(--mg-card); border: 1px solid rgba(255,255,255,.06); border-radius: var(--mg-radius); padding: 18px; }
+  .mg-stars { color: #ffd166; }
+  .mg-carousel-controls { display: flex; gap: 10px; justify-content: center; margin-top: 12px; }
+  .mg-dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(255,255,255,.2); }
+  .mg-dot.active { background: var(--mg-primary); }
+
+  /* Contact */
+  .mg-contact { display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; }
+  .mg-form { background: var(--mg-card); border: 1px solid rgba(255,255,255,.06); border-radius: var(--mg-radius); padding: 18px; }
+  .mg-field { display: grid; gap: 6px; margin-bottom: 12px; }
+  .mg-input, .mg-textarea, .mg-select { background: #0e141c; border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 12px; color: var(--mg-text); }
+  .mg-input:focus-visible, .mg-textarea:focus-visible, .mg-select:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--mg-accent); outline-offset: 2px; }
+  .mg-textarea { min-height: 120px; resize: vertical; }
+  .mg-inline { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .mg-info { background: var(--mg-card); border: 1px solid rgba(255,255,255,.06); border-radius: var(--mg-radius); padding: 18px; display: grid; gap: 12px; }
+  .mg-info-row { display: flex; gap: 10px; align-items: center; color: var(--mg-muted); }
+  .mg-map { border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.06); height: 220px; background: #0e141c; display: grid; place-content: center; color: var(--mg-muted); }
+
+  /* Footer */
+  .mg-footer { background: #0a0f15; border-top: 1px solid rgba(255,255,255,.06); margin-top: 40px; }
+  :root[data-theme="light"] .mg-footer { background: #f0f3fa; border-top-color: rgba(0,0,0,.06); }
+  .mg-foot-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 18px; padding: 40px 0; }
+  .mg-foot-title { font-weight: 700; margin-bottom: 8px; }
+  .mg-foot-link { color: var(--mg-muted); display: block; margin: 6px 0; }
+  .mg-foot-link:hover { color: var(--mg-text); }
+  .mg-news { display: grid; gap: 10px; }
+  .mg-news input { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,.08); background: #0e141c; color: var(--mg-text); }
+  :root[data-theme="light"] .mg-news input { background: #ffffff; border-color: rgba(0,0,0,.06); }
+  .mg-social { display: flex; gap: 10px; margin-top: 8px; }
+  .mg-social a { width: 34px; height: 34px; display: grid; place-content: center; border-radius: 999px; background: rgba(255,255,255,.06); color: var(--mg-text); }
+  .mg-social a:hover { background: rgba(255,255,255,.12); }
+  .mg-foot-bar { border-top: 1px solid rgba(255,255,255,.06); padding: 12px 0; color: var(--mg-muted); text-align: center; }
+  :root[data-theme="light"] .mg-foot-bar { border-top-color: rgba(0,0,0,.06); }
+
+  /* Responsive */
+  @media (max-width: 1000px) {
+    .mg-hero-grid, .mg-about, .mg-contact { grid-template-columns: 1fr; }
+    .mg-portfolio { grid-template-columns: repeat(3, 1fr); }
+    .mg-foot-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 720px) {
+    .mg-menu { display: none; position: absolute; top: 72px; left: 0; right: 0; padding: 10px 20px; background: rgba(9,12,18,.98); border-bottom: 1px solid rgba(255,255,255,.06); }
+    .mg-menu.open { display: grid; grid-template-columns: 1fr; gap: 8px; }
+    .mg-burger { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 10px; }
+    .mg-portfolio { grid-template-columns: repeat(2, 1fr); }
+    .mg-inline { grid-template-columns: 1fr; }
+    .mg-foot-grid { grid-template-columns: 1fr; }
+    .mg-testimonial { grid-template-columns: 1fr; }
+    .mg-sec-head { flex-direction: column; align-items: flex-start; }
+    .mg-hero { padding: 70px 0 40px; }
+  }
+  @media (max-width: 480px) {
+    .mg-title { font-size: clamp(28px, 8vw, 40px); }
+    .mg-container { padding: 0 16px; }
+    .mg-section { padding: 56px 0; }
+  }
+
+  /* Motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="mg-header">
+    <div class="mg-container mg-nav" id="siteHeader">
+      <div class="mg-logo">MKONZO <span>GRAPHICS</span></div>
+      <nav class="mg-menu" id="mgMenu">
+        <a class="mg-link" href="#home">Home</a>
+        <a class="mg-link" href="#services">Services</a>
+        <a class="mg-link" href="#portfolio">Portfolio</a>
+        <a class="mg-link" href="#about">About</a>
+        <a class="mg-link" href="#contact">Contact</a>
+        <a class="mg-cta" href="#contact">Get a Quote</a>
+      </nav>
+      <button class="mg-theme" id="mgTheme" aria-label="Toggle theme">
+        <span id="themeIcon">🌙</span>
+        <span id="themeLabel">Dark</span>
+      </button>
+      <button class="mg-burger" id="mgBurger" aria-label="Toggle menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="mg-hero">
+    <div class="mg-container mg-hero-grid">
+      <div>
+        <div class="mg-eyebrow">Creative Design Studio</div>
+        <h1 class="mg-title">Transforming Ideas Into Visual Masterpieces</h1>
+        <p class="mg-subtitle">We bring brands to life through thoughtful design, strategic storytelling, and pixel-perfect execution across print and digital.</p>
+        <div class="mg-hero-actions">
+          <a class="mg-btn primary" href="#portfolio">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10H7z"/><path d="M3 3h18v18H3z" opacity=".35"/></svg>
+            View Our Work
+          </a>
+          <a class="mg-btn" href="#contact">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9z"/></svg>
+            Get Started
+          </a>
+        </div>
+      </div>
+      <div class="mg-hero-art">
+        <div class="mg-hero-card">
+          <div class="mg-hero-img">MKONZO — CASE STUDIES</div>
+        </div>
+      </div>
+    </div>
+    <div class="mg-scroll">Scroll
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="mg-section">
+    <div class="mg-container">
+      <div class="mg-sec-head">
+        <h2 class="mg-h2">Services</h2>
+        <p class="mg-lead">From brand identities to marketing campaigns, we craft comprehensive visual systems that connect with your audience.</p>
+      </div>
+      <div class="mg-grid cols-3">
+        <div class="mg-service">
+          <div class="mg-icon">✦</div>
+          <h3>Logo Design & Branding</h3>
+          <p>Memorable logos and scalable brand systems that express your essence across every touchpoint.</p>
+          <a class="mg-more" href="#contact">Learn More →</a>
+        </div>
+        <div class="mg-service">
+          <div class="mg-icon">🖨</div>
+          <h3>Print Design</h3>
+          <p>Brochures, flyers, business cards, and posters designed for impact and production-ready precision.</p>
+          <a class="mg-more" href="#contact">Learn More →</a>
+        </div>
+        <div class="mg-service">
+          <div class="mg-icon">💻</div>
+          <h3>Digital Design</h3>
+          <p>High-performing social media and web graphics optimized for attention and conversion.</p>
+          <a class="mg-more" href="#contact">Learn More →</a>
+        </div>
+        <div class="mg-service">
+          <div class="mg-icon">📦</div>
+          <h3>Packaging Design</h3>
+          <p>Distinctive packaging that stands out on the shelf and communicates your product’s value.</p>
+          <a class="mg-more" href="#contact">Learn More →</a>
+        </div>
+        <div class="mg-service">
+          <div class="mg-icon">✍️</div>
+          <h3>Illustration & Custom Graphics</h3>
+          <p>Tailored illustrations and iconography systems that add character and clarity.</p>
+          <a class="mg-more" href="#contact">Learn More →</a>
+        </div>
+        <div class="mg-service">
+          <div class="mg-icon">🧭</div>
+          <h3>Brand Identity Development</h3>
+          <p>Strategy-led identities with guidelines covering tone, color, typography, and application.</p>
+          <a class="mg-more" href="#contact">Learn More →</a>
+        </div>
+        <div class="mg-service">
+          <div class="mg-icon">📣</div>
+          <h3>Marketing Materials</h3>
+          <p>Campaign creative, pitch decks, ads, and collateral that persuade and perform.</p>
+          <a class="mg-more" href="#contact">Learn More →</a>
+        </div>
+        <div class="mg-service">
+          <div class="mg-icon">📱</div>
+          <h3>UI/UX Design</h3>
+          <p>Intuitive interfaces and design systems focused on accessibility and delightful flows.</p>
+          <a class="mg-more" href="#contact">Learn More →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio" class="mg-section">
+    <div class="mg-container">
+      <div class="mg-sec-head">
+        <h2 class="mg-h2">Portfolio</h2>
+        <div class="mg-filter" id="mgFilters">
+          <button class="mg-chip active" data-filter="all">All</button>
+          <button class="mg-chip" data-filter="branding">Branding</button>
+          <button class="mg-chip" data-filter="print">Print</button>
+          <button class="mg-chip" data-filter="digital">Digital</button>
+          <button class="mg-chip" data-filter="packaging">Packaging</button>
+          <button class="mg-chip" data-filter="illustration">Illustration</button>
+        </div>
+      </div>
+      <div class="mg-portfolio" id="mgGallery">
+        <!-- 12 placeholder items -->
+        <div class="mg-card" data-cat="branding"><img loading="lazy" src="https://picsum.photos/seed/mg1/600/400" alt="Branding 1"><div class="mg-overlay"><div class="mg-meta">Brand Refresh — Branding</div></div></div>
+        <div class="mg-card" data-cat="print"><img loading="lazy" src="https://picsum.photos/seed/mg2/600/400" alt="Print 1"><div class="mg-overlay"><div class="mg-meta">Poster Series — Print</div></div></div>
+        <div class="mg-card" data-cat="digital"><img loading="lazy" src="https://picsum.photos/seed/mg3/600/400" alt="Digital 1"><div class="mg-overlay"><div class="mg-meta">Social Pack — Digital</div></div></div>
+        <div class="mg-card" data-cat="packaging"><img loading="lazy" src="https://picsum.photos/seed/mg4/600/400" alt="Packaging 1"><div class="mg-overlay"><div class="mg-meta">Coffee Box — Packaging</div></div></div>
+        <div class="mg-card" data-cat="illustration"><img loading="lazy" src="https://picsum.photos/seed/mg5/600/400" alt="Illustration 1"><div class="mg-overlay"><div class="mg-meta">Editorial Art — Illustration</div></div></div>
+        <div class="mg-card" data-cat="branding"><img loading="lazy" src="https://picsum.photos/seed/mg6/600/400" alt="Branding 2"><div class="mg-overlay"><div class="mg-meta">Identity Kit — Branding</div></div></div>
+        <div class="mg-card" data-cat="print"><img loading="lazy" src="https://picsum.photos/seed/mg7/600/400" alt="Print 2"><div class="mg-overlay"><div class="mg-meta">Lookbook — Print</div></div></div>
+        <div class="mg-card" data-cat="digital"><img loading="lazy" src="https://picsum.photos/seed/mg8/600/400" alt="Digital 2"><div class="mg-overlay"><div class="mg-meta">Web Banners — Digital</div></div></div>
+        <div class="mg-card" data-cat="packaging"><img loading="lazy" src="https://picsum.photos/seed/mg9/600/400" alt="Packaging 2"><div class="mg-overlay"><div class="mg-meta">Tea Pouch — Packaging</div></div></div>
+        <div class="mg-card" data-cat="illustration"><img loading="lazy" src="https://picsum.photos/seed/mg10/600/400" alt="Illustration 2"><div class="mg-overlay"><div class="mg-meta">Mascot Set — Illustration</div></div></div>
+        <div class="mg-card" data-cat="branding"><img loading="lazy" src="https://picsum.photos/seed/mg11/600/400" alt="Branding 3"><div class="mg-overlay"><div class="mg-meta">Rebrand — Branding</div></div></div>
+        <div class="mg-card" data-cat="digital"><img loading="lazy" src="https://picsum.photos/seed/mg12/600/400" alt="Digital 3"><div class="mg-overlay"><div class="mg-meta">App Ads — Digital</div></div></div>
+      </div>
+      <div style="margin-top:16px;">
+        <a class="mg-btn" href="#portfolio">View All Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="mg-section">
+    <div class="mg-container">
+      <div class="mg-sec-head">
+        <h2 class="mg-h2">About Mkonzo Graphics</h2>
+      </div>
+      <div class="mg-about">
+        <div>
+          <p class="mg-lead">Mkonzo Graphics is a design studio dedicated to elevating brands through craftsmanship and strategy. We blend aesthetics with business outcomes, delivering work that’s as effective as it is beautiful.</p>
+          <p class="mg-lead">From startups to established companies, our partnerships are rooted in clarity, collaboration, and care. We thrive on challenges that demand fresh thinking and meticulous execution.</p>
+          <div class="mg-stats">
+            <div class="mg-stat"><div style="font-size:22px;font-weight:800;">7+</div><div class="mg-muted">Years Experience</div></div>
+            <div class="mg-stat"><div style="font-size:22px;font-weight:800;">180+</div><div class="mg-muted">Projects</div></div>
+            <div class="mg-stat"><div style="font-size:22px;font-weight:800;">120+</div><div class="mg-muted">Happy Clients</div></div>
+            <div class="mg-stat"><div style="font-size:22px;font-weight:800;">14</div><div class="mg-muted">Awards</div></div>
+          </div>
+          <div class="mg-tags">
+            <span class="mg-tag">Adobe Creative Suite</span>
+            <span class="mg-tag">Branding</span>
+            <span class="mg-tag">Typography</span>
+            <span class="mg-tag">Design Systems</span>
+            <span class="mg-tag">Packaging</span>
+            <span class="mg-tag">Illustration</span>
+          </div>
+        </div>
+        <div>
+          <div class="mg-hero-card">
+            <div class="mg-hero-img">Studio Portrait</div>
+          </div>
+          <div style="margin-top:14px;" class="mg-lead">Our mission is to empower brands with design that moves people. Our vision is a world where every visual communicates with purpose.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="mg-section">
+    <div class="mg-container">
+      <div class="mg-sec-head">
+        <h2 class="mg-h2">What Clients Say</h2>
+        <p class="mg-lead">Feedback from partners who trusted us with their brands.</p>
+      </div>
+      <div class="mg-carousel" id="mgCarousel">
+        <div class="mg-track" id="mgTrack">
+          <!-- Slide 1 -->
+          <div class="mg-testimonial">
+            <div>
+              <div style="width:64px;height:64px;border-radius:999px;background:#22314a;margin-bottom:8px;"></div>
+              <div class="mg-stars">★★★★★</div>
+              <div style="margin-top:6px;font-weight:700;">Amina Yusuf</div>
+              <div class="mg-lead">CMO, Lumi Foods</div>
+            </div>
+            <p class="mg-lead">“Mkonzo transformed our identity. The brand system increased recognition and made our campaigns feel cohesive across every channel.”</p>
+          </div>
+          <!-- Slide 2 -->
+          <div class="mg-testimonial">
+            <div>
+              <div style="width:64px;height:64px;border-radius:999px;background:#22314a;margin-bottom:8px;"></div>
+              <div class="mg-stars">★★★★★</div>
+              <div style="margin-top:6px;font-weight:700;">Brian Okoth</div>
+              <div class="mg-lead">Founder, PeakFit</div>
+            </div>
+            <p class="mg-lead">“From packaging to web graphics, everything was on-brand and on-time. Sales went up within weeks of launch.”</p>
+          </div>
+          <!-- Slide 3 -->
+          <div class="mg-testimonial">
+            <div>
+              <div style="width:64px;height:64px;border-radius:999px;background:#22314a;margin-bottom:8px;"></div>
+              <div class="mg-stars">★★★★★</div>
+              <div style="margin-top:6px;font-weight:700;">Shirlean M.</div>
+              <div class="mg-lead">Product Lead, Nova</div>
+            </div>
+            <p class="mg-lead">“Collaborative, strategic, and incredibly creative. The attention to detail is unmatched.”</p>
+          </div>
+          <!-- Slide 4 -->
+          <div class="mg-testimonial">
+            <div>
+              <div style="width:64px;height:64px;border-radius:999px;background:#22314a;margin-bottom:8px;"></div>
+              <div class="mg-stars">★★★★★</div>
+              <div style="margin-top:6px;font-weight:700;">David Kim</div>
+              <div class="mg-lead">CEO, GreenCart</div>
+            </div>
+            <p class="mg-lead">“Our print materials finally match the quality of our products. Couldn’t recommend more.”</p>
+          </div>
+          <!-- Slide 5 -->
+          <div class="mg-testimonial">
+            <div>
+              <div style="width:64px;height:64px;border-radius:999px;background:#22314a;margin-bottom:8px;"></div>
+              <div class="mg-stars">★★★★★</div>
+              <div style="margin-top:6px;font-weight:700;">Grace Nyambura</div>
+              <div class="mg-lead">Head of Design, Vela</div>
+            </div>
+            <p class="mg-lead">“They elevated our visuals across the board. Professional, friendly, and results-driven.”</p>
+          </div>
+        </div>
+        <div class="mg-carousel-controls">
+          <div class="mg-dot" data-dot="0"></div>
+          <div class="mg-dot" data-dot="1"></div>
+          <div class="mg-dot" data-dot="2"></div>
+          <div class="mg-dot" data-dot="3"></div>
+          <div class="mg-dot" data-dot="4"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="mg-section">
+    <div class="mg-container">
+      <div class="mg-sec-head">
+        <h2 class="mg-h2">Contact Us</h2>
+        <p class="mg-lead">Tell us about your project. We’ll reply within 1–2 business days.</p>
+      </div>
+      <div class="mg-contact">
+        <form class="mg-form" id="mgForm" novalidate>
+          <div class="mg-inline">
+            <div class="mg-field">
+              <label for="fullName">Full Name</label>
+              <input id="fullName" class="mg-input" type="text" required />
+            </div>
+            <div class="mg-field">
+              <label for="email">Email</label>
+              <input id="email" class="mg-input" type="email" required />
+            </div>
+          </div>
+          <div class="mg-inline">
+            <div class="mg-field">
+              <label for="phone">Phone (optional)</label>
+              <input id="phone" class="mg-input" type="tel" />
+            </div>
+            <div class="mg-field">
+              <label for="service">Service Interested In</label>
+              <select id="service" class="mg-select" required>
+                <option value="" disabled selected>Select a service</option>
+                <option>Logo & Branding</option>
+                <option>Print Design</option>
+                <option>Digital Design</option>
+                <option>Packaging</option>
+                <option>Illustration</option>
+                <option>Brand Identity</option>
+                <option>Marketing Materials</option>
+                <option>UI/UX</option>
+              </select>
+            </div>
+          </div>
+          <div class="mg-field">
+            <label for="budget">Budget Range</label>
+            <select id="budget" class="mg-select" required>
+              <option value="" disabled selected>Select a range</option>
+              <option>$200–$500</option>
+              <option>$500–$1,500</option>
+              <option>$1,500–$3,000</option>
+              <option>$3,000+</option>
+            </select>
+          </div>
+          <div class="mg-field">
+            <label for="details">Project Details</label>
+            <textarea id="details" class="mg-textarea" required placeholder="Tell us about your goals, audience, timeline, and references..."></textarea>
+          </div>
+          <button class="mg-btn primary" id="submitBtn" type="submit">Submit</button>
+          <div id="formMsg" class="mg-lead" style="margin-top:10px;"></div>
+        </form>
+        <div class="mg-info">
+          <div class="mg-info-row"><strong>Email:</strong> <a href="mailto:mkonzoshirlean4@gmail.com">mkonzoshirlean4@gmail.com</a></div>
+          <div class="mg-info-row"><strong>Phone:</strong> <span>+2547116992392</span></div>
+          <div class="mg-info-row"><strong>Address:</strong> <span>Nairobi, Kenya</span></div>
+          <div class="mg-social">
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="Facebook">FB</a>
+            <a href="#" aria-label="Twitter">X</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="Behance">Be</a>
+            <a href="#" aria-label="Dribbble">Db</a>
+          </div>
+          <div class="mg-map">Google Maps Placeholder</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="mg-footer">
+    <div class="mg-container">
+      <div class="mg-foot-grid">
+        <div>
+          <div class="mg-foot-title">MKONZO GRAPHICS</div>
+          <div class="mg-lead">We craft brand identities, print, digital, and packaging that perform.</div>
+        </div>
+        <div>
+          <div class="mg-foot-title">Services</div>
+          <a class="mg-foot-link" href="#services.html">Branding</a>
+          <a class="mg-foot-link" href="#services.html">Print</a>
+          <a class="mg-foot-link" href="#services.html">Digital</a>
+          <a class="mg-foot-link" href="#services.html">Packaging</a>
+        </div>
+        <div>
+          <div class="mg-foot-title">Quick Links</div>
+          <a class="mg-foot-link" href="#portfolio.html">Portfolio</a>
+          <a class="mg-foot-link" href="#about.html">About</a>
+          <a class="mg-foot-link" href="#contact.html">Contact</a>
+        </div>
+        <div>
+          <div class="mg-foot-title">Newsletter</div>
+          <div class="mg-news">
+            <input type="email" placeholder="Your email" />
+            <button class="mg-btn">Subscribe</button>
+          </div>
+        </div>
+      </div>
+      <div class="mg-foot-bar">© <span id="year"></span> Mkonzo Graphics. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div class="mg-modal" id="mgModal" aria-hidden="true">
+    <div class="mg-modal-card">
+      <div class="mg-modal-head">
+        <strong id="modalTitle">Project</strong>
+        <button class="mg-close" id="mgClose" aria-label="Close">×</button>
+      </div>
+      <div class="mg-modal-body">
+        <img id="modalImg" alt="Project" style="width:100%;border-radius:10px;" />
+        <div id="modalMeta" style="margin-top:10px;color:var(--mg-muted);"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // Sticky header style on scroll
+  (function(){
+    const header = document.getElementById('siteHeader');
+    function onScroll(){ header.classList.toggle('scrolled', window.scrollY > 8); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  // Mobile menu toggle
+  (function(){
+    const menu = document.getElementById('mgMenu');
+    const burger = document.getElementById('mgBurger');
+    burger.addEventListener('click', function(){ menu.classList.toggle('open'); });
+    // Close on link click (mobile)
+    menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ menu.classList.remove('open'); }); });
+  })();
+
+  // Theme toggle (light/dark), respects system preference and persists
+  (function(){
+    const root = document.documentElement;
+    const btn = document.getElementById('mgTheme');
+    const icon = document.getElementById('themeIcon');
+    const label = document.getElementById('themeLabel');
+    function apply(theme){
+      if (theme === 'light') {
+        root.setAttribute('data-theme', 'light');
+        icon.textContent = '☀️';
+        label.textContent = 'Light';
+      } else {
+        root.setAttribute('data-theme', 'dark');
+        icon.textContent = '🌙';
+        label.textContent = 'Dark';
+      }
+    }
+    const stored = localStorage.getItem('mg-theme');
+    const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    apply(stored || (prefersLight ? 'light' : 'dark'));
+    btn.addEventListener('click', function(){
+      const isLight = root.getAttribute('data-theme') === 'light';
+      const next = isLight ? 'dark' : 'light';
+      apply(next);
+      localStorage.setItem('mg-theme', next);
+    });
+  })();
+
+  // Portfolio filter + modal
+  (function(){
+    const filters = document.getElementById('mgFilters');
+    const chips = Array.from(filters.querySelectorAll('.mg-chip'));
+    const gallery = document.getElementById('mgGallery');
+    const cards = Array.from(gallery.querySelectorAll('.mg-card'));
+    const modal = document.getElementById('mgModal');
+    const closeBtn = document.getElementById('mgClose');
+    const modalImg = document.getElementById('modalImg');
+    const modalMeta = document.getElementById('modalMeta');
+    const modalTitle = document.getElementById('modalTitle');
+
+    filters.addEventListener('click', function(e){
+      var target = e.target.closest('.mg-chip');
+      if (!target) return;
+      chips.forEach(function(c){ c.classList.remove('active'); });
+      target.classList.add('active');
+      var f = target.getAttribute('data-filter');
+      cards.forEach(function(card){
+        var show = f === 'all' || card.getAttribute('data-cat') === f;
+        card.style.display = show ? '' : 'none';
+      });
+    });
+
+    gallery.addEventListener('click', function(e){
+      var card = e.target.closest('.mg-card');
+      if (!card) return;
+      var img = card.querySelector('img');
+      var meta = card.querySelector('.mg-meta').textContent;
+      modalImg.src = img.src;
+      modalMeta.textContent = meta;
+      modalTitle.textContent = meta;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    });
+
+    function close(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); }
+    closeBtn.addEventListener('click', close);
+    modal.addEventListener('click', function(e){ if (e.target === modal) close(); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  })();
+
+  // Testimonials carousel (auto + dots)
+  (function(){
+    const track = document.getElementById('mgTrack');
+    const slides = Array.from(track.children);
+    const dots = Array.from(document.querySelectorAll('.mg-dot'));
+    var index = 0, timer;
+    function goTo(i){
+      index = (i + slides.length) % slides.length;
+      track.style.transform = 'translateX(' + (-index * 100) + '%)';
+      dots.forEach(function(d, di){ d.classList.toggle('active', di === index); });
+    }
+    function start(){ timer = setInterval(function(){ goTo(index + 1); }, 4000); }
+    function stop(){ clearInterval(timer); }
+    dots.forEach(function(d, di){ d.addEventListener('click', function(){ stop(); goTo(di); start(); }); });
+    track.addEventListener('mouseenter', stop); track.addEventListener('mouseleave', start);
+    goTo(0); start();
+  })();
+
+  // Contact form validation + UX
+  (function(){
+    const form = document.getElementById('mgForm');
+    const msg = document.getElementById('formMsg');
+    const submitBtn = document.getElementById('submitBtn');
+    function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var data = new FormData(form);
+      var name = (data.get('fullName') || document.getElementById('fullName').value).trim();
+      var email = (data.get('email') || document.getElementById('email').value).trim();
+      var service = document.getElementById('service').value;
+      var budget = document.getElementById('budget').value;
+      var details = document.getElementById('details').value.trim();
+      msg.style.color = 'var(--mg-muted)';
+      if (!name || !validEmail(email) || !service || !budget || !details) {
+        msg.style.color = 'var(--mg-warning)';
+        msg.textContent = 'Please complete all required fields with valid information.';
+        return;
+      }
+      submitBtn.disabled = true; submitBtn.textContent = 'Sending...';
+      setTimeout(function(){
+        submitBtn.disabled = false; submitBtn.textContent = 'Submit';
+        msg.style.color = 'var(--mg-success)';
+        msg.textContent = 'Thanks! Your message has been sent.';
+        form.reset();
+      }, 1000);
+    });
+  })();
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
+
